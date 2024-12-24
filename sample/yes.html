@@ -183,22 +183,33 @@
             white-space: nowrap;
         }
     </style>
-     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-     
-      const bookingDateCell = document.getElementById('bookingDate');
-      const today = new Date();
+<script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Set booking date
+            const bookingDateCell = document.getElementById('bookingDate');
+            const today = new Date();
 
-        const day = String(today.getDate()).padStart(2, '0');
-        const month = today.toLocaleString('default', { month: 'short' });
-        const year = today.getFullYear();
+            const day = String(today.getDate()).padStart(2, '0');
+            const month = today.toLocaleString('default', { month: 'short' });
+            const year = today.getFullYear();
 
-        const formattedDate = `${day}-${month}-${year}`;
-    
-      bookingDateCell.textContent = formattedDate;
+            const formattedDate = `${day}-${month}-${year}`;
+            bookingDateCell.textContent = formattedDate;
 
-    });
-  </script>
+            // Set booking slot
+            const currentHour = today.getHours();
+            const startHour = String((currentHour % 12) || 12).padStart(2, '0'); // Convert to 12-hour format and pad with 0
+            const endHour = String(((currentHour + 1) % 12) || 12).padStart(2, '0'); // Next hour in 12-hour format
+            const ampmStart = currentHour >= 12 ? 'PM' : 'AM';
+            const ampmEnd = (currentHour + 1) >= 12 ? 'PM' : 'AM';
+            const bookingSlot = `${startHour}:00 ${ampmStart} to ${endHour}:00 ${ampmEnd}`;
+
+            const bookingSlotCell = document.getElementById('bookingSlot');
+            if (bookingSlotCell) {
+                bookingSlotCell.textContent = bookingSlot;
+            }
+        });
+    </script>
 
 </body>
 
